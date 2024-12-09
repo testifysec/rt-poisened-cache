@@ -1,4 +1,4 @@
-## README - test
+## README
 
 ### Overview
 
