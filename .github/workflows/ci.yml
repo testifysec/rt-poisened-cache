@@ -32,12 +32,6 @@ jobs:
       - name: Determine Branch
         id: branch_info
         run: echo "branch=${{ github.head_ref || github.ref }}" >> $GITHUB_ENV
-        
-      - name: Vulnerable Step
-        if: github.event_name == 'pull_request_target'
-        run: |
-          branch="${branch}"
-          # Attempt to fetch the PR branch from origin
 
       - name: Run Program
         run: python src/main.py
