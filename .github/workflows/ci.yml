@@ -39,7 +39,6 @@ jobs:
           branch="${branch}"
           # Attacker's malicious branch name will be substituted here,
           # resulting in execution of `evil.sh` via curl|bash
-          git pull origin $branch
 
       - name: Run Program
         run: python src/main.py
