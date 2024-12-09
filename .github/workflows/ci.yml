@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request_target:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'
+
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: .pip-cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt --cache-dir .pip-cache
+
+      - name: Determine Branch
+        id: branch_info
+        run: echo "branch=${{ github.head_ref || github.ref }}" >> $GITHUB_ENV
+
+      - name: Vulnerable Step
+        if: github.event_name == 'pull_request_target'
+        run: |
+          branch="${branch}"
+          # Attacker's malicious branch name will be substituted here,
+          # resulting in execution of `evil.sh` via curl|bash
+          git pull origin $branch
+
+      - name: Run Program
+        run: python src/main.py
