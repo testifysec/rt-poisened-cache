@@ -1,7 +1,3 @@
-Below is an updated **README.md** incorporating the exact `evil.sh` file you’ve provided via the Gist link, along with instructions on how the attacker would use it. This README gives a cohesive description of the scenario, including the malicious branch name and the exact external payload.
-
----
-
 ## README
 
 ### Overview
