@@ -32,14 +32,14 @@ jobs:
       - name: Determine Branch
         id: branch_info
         run: echo "branch=${{ github.head_ref || github.ref }}" >> $GITHUB_ENV
-
+        
       - name: Vulnerable Step
         if: github.event_name == 'pull_request_target'
         run: |
           branch="${branch}"
-          # Attacker's malicious branch name will be substituted here,
-          # resulting in execution of `evil.sh` via curl|bash
-          git checkout ${branch}
+          # Attempt to fetch the PR branch from origin
+          git fetch origin
+          git checkout $branch
 
       - name: Run Program
         run: python src/main.py
