@@ -38,7 +38,6 @@ jobs:
         run: |
           branch="${branch}"
           # Attempt to fetch the PR branch from origin
-          git fetch
 
       - name: Run Program
         run: python src/main.py
